@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/table"
 import React from "react"
 import Paginator from "./paginator"
-import Spinner from "../spinner"
+import Spinner from "../../ui/spinner"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -45,7 +45,7 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <div className="rounded-md border">
+    <div className="rounded-md border w-full">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -82,7 +82,7 @@ export function DataTable<TData, TValue>({
           ) : (
             <TableRow>
               <TableCell colSpan={columns.length} className="h-24 text-center">
-                <Spinner />
+                Nenhum registro encontrado
               </TableCell>
             </TableRow>
           )}
