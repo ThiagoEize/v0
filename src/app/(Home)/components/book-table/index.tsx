@@ -1,14 +1,23 @@
-'use client'
+'use client';
 
-import { Button } from "@/components/ui/button";
-import { fetchBooks } from "@/lib/api/books";
-import { DataTable } from "@/components/shared/DataTable";
-import { usePaginatedQuery } from "@/hooks/usePaginatedQuery";
-import { IBook } from "@/lib/types/books";
-import Spinner from "@/components/ui/spinner";
-import { useEffect, useState } from "react";
-import { getBookColumns } from "./columns";
-import { IBookState } from "./actions";
+import { fetchBooks } from '@/lib/api/books';
+import { DataTable } from '@/components/shared/data-table';
+import { usePaginatedQuery } from '@/hooks/usePaginatedQuery';
+import { IBook } from '@/lib/types/books';
+import Spinner from '@/components/ui/spinner';
+import { useEffect, useState } from 'react';
+import { getBookColumns } from './columns';
+import EditBookDialog from './dialogs/edit';
+import CreateBookDialog from './dialogs/add';
+import { Button } from '@/components/ui/button';
+
+export type ModalType = "delete" | "edit" | "create" | "view"
+
+export interface IBookState {
+  type: ModalType | null;
+  isOpen: boolean;
+  data?: IBook;
+}
 
 export default function BookTable() {
   const {
@@ -16,26 +25,53 @@ export default function BookTable() {
     isLoading,
     refetch,
   } = usePaginatedQuery<IBook[]>({
-    queryKey: ["products"],
+    queryKey: ['books-home'],
     fetch: () => {
       return fetchBooks();
     },
   });
 
-  const [modalState, setModalState] = useState<IBookState>({ type: null, isOpen: false, data: undefined });
+  const [modalState, setModalState] = useState<IBookState>({
+    type: null,
+    isOpen: false,
+    data: undefined,
+  });
+
   const columns = getBookColumns(setModalState);
 
-  useEffect(() => {
-    console.log("modalState", modalState);
-  }, [modalState]);
+  const handleCloseModal = () => {
+    setModalState({ type: null, isOpen: false, data: undefined });
+  };
+
+  function handleAddBook(): void {
+    setModalState({ type: 'create', isOpen: true, data: undefined });
+  }
 
   return (
     <div>
+      <div className="flex justify-end mb-4">
+        <Button onClick={() => handleAddBook()}>Add book</Button>
+      </div>
       {isLoading ?
         <Spinner size="large" color="border-blue-500" />
         :
         <DataTable columns={columns} data={books || []} />
       }
+      {modalState.type === "edit" && (
+        <EditBookDialog
+          isOpen={modalState.isOpen}
+          onClose={handleCloseModal}
+          book={modalState.data}
+          refetch={refetch}
+        />
+      )}
+      {modalState.type === "create" && (
+        <CreateBookDialog
+          isOpen={modalState.isOpen}
+          onClose={handleCloseModal}
+          refetch={refetch}
+        />
+      )}
     </div>
   );
 }

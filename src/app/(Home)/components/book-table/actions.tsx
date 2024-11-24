@@ -3,15 +3,7 @@ import { Dropdown, DropdownTrigger, DropdownContent, DropdownItem } from "@/comp
 
 import { Dispatch, SetStateAction } from "react";
 import { IBook } from "@/lib/types/books";
-
-export type ModalType = "delete" | "edit" | "view"
-
-export interface IBookState {
-  type: ModalType | null;
-  isOpen: boolean;
-  data?: IBook;
-}
-
+import { IBookState } from ".";
 interface BookActionsDropdownProps {
   rowData: IBook;
   setModalState: Dispatch<SetStateAction<IBookState>>;

@@ -19,8 +19,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import React from "react"
-import Paginator from "./paginator"
-import Spinner from "../../ui/spinner"
+import Paginator from "./pagination/paginator"
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
@@ -52,7 +51,7 @@ export function DataTable<TData, TValue>({
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id}>
+                  <TableHead className="px-0" key={header.id}>
                     {header.isPlaceholder
                       ? null
                       : flexRender(
