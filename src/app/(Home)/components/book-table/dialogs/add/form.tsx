@@ -10,8 +10,6 @@ import { createBook } from '@/lib/api/books';
 
 const addBookSchema = z.object({
   title: z.string().min(1, 'Title is required'),
-  author: z.string().min(1, 'Author is required'),
-  authors: z.string().optional(),
   publisher: z.string().optional(),
   synopsis: z.string().optional(),
 });
@@ -41,16 +39,6 @@ export default function AddBookForm({ onSuccess }: CreateBookFormProps) {
         <label htmlFor="title" className="block text-sm font-medium text-gray-700">Title</label>
         <Input id="title" {...register('title')} />
         {errors.title && <p className="text-red-500">{errors.title.message}</p>}
-      </div>
-      <div>
-        <label htmlFor="author" className="block text-sm font-medium text-gray-700">Author</label>
-        <Input id="author" {...register('author')} />
-        {errors.author && <p className="text-red-500">{errors.author.message}</p>}
-      </div>
-      <div>
-        <label htmlFor="authors" className="block text-sm font-medium text-gray-700">Authors</label>
-        <Input id="authors" {...register('authors')} />
-        {errors.authors && <p className="text-red-500">{errors.authors.message}</p>}
       </div>
       <div>
         <label htmlFor="publisher" className="block text-sm font-medium text-gray-700">Publisher</label>

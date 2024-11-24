@@ -10,6 +10,8 @@ import { getBookColumns } from './columns';
 import EditBookDialog from './dialogs/edit';
 import CreateBookDialog from './dialogs/add';
 import { Button } from '@/components/ui/button';
+import DetailsBookDialog from './dialogs/show';
+import DeleteBookDialog from './dialogs/delete';
 
 export type ModalType = "delete" | "edit" | "create" | "view"
 
@@ -47,6 +49,10 @@ export default function BookTable() {
     setModalState({ type: 'create', isOpen: true, data: undefined });
   }
 
+  useEffect(() => {
+    console.log('modalState', modalState);
+  }, [modalState.type]);
+
   return (
     <div>
       <div className="flex justify-end mb-4">
@@ -69,6 +75,21 @@ export default function BookTable() {
         <CreateBookDialog
           isOpen={modalState.isOpen}
           onClose={handleCloseModal}
+          refetch={refetch}
+        />
+      )}
+      {modalState.type === "view" && (
+        <DetailsBookDialog
+          isOpen={modalState.isOpen}
+          onClose={handleCloseModal}
+          book={modalState.data}
+        />
+      )}
+      {modalState.type === "delete" && (
+        <DeleteBookDialog
+          isOpen={modalState.isOpen}
+          onClose={handleCloseModal}
+          book={modalState.data}
           refetch={refetch}
         />
       )}

@@ -12,8 +12,6 @@ import { updateBook } from '@/lib/api/books';
 
 const editBookSchema = z.object({
   title: z.string().min(1, 'Title is required'),
-  author: z.string().min(1, 'Author is required'),
-  authors: z.string().optional(),
   publisher: z.string().optional(),
   synopsis: z.string().optional(),
 });
@@ -37,8 +35,6 @@ export default function EditBookForm({ book, onSuccess }: EditBookFormProps) {
   useEffect(() => {
     if (book) {
       setValue('title', book.title || '');
-      setValue('author', book.author || '');
-      setValue('authors', book.authors || '');
       setValue('publisher', book.publisher || '');
       setValue('synopsis', book.synopsis || '');
     }
@@ -70,30 +66,6 @@ export default function EditBookForm({ book, onSuccess }: EditBookFormProps) {
         <Input id="title" {...register('title')} />
         {errors.title && (
           <p className="text-red-500">{errors.title.message}</p>
-        )}
-      </div>
-      <div>
-        <label
-          htmlFor="author"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Author
-        </label>
-        <Input id="author" {...register('author')} />
-        {errors.author && (
-          <p className="text-red-500">{errors.author.message}</p>
-        )}
-      </div>
-      <div>
-        <label
-          htmlFor="authors"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Authors
-        </label>
-        <Input id="authors" {...register('authors')} />
-        {errors.authors && (
-          <p className="text-red-500">{errors.authors.message}</p>
         )}
       </div>
       <div>

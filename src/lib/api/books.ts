@@ -34,3 +34,8 @@ export const updateBook = async (id: number, data: IUpdateBook): Promise<IBook> 
   const response = await Api.put(`${BASE_ROUTE}/${id}`, data);
   return response.data;
 };
+
+export const deleteBook = async (id: number): Promise<IBook> => {
+  const response = await Api.delete(`${BASE_ROUTE}/${id}`);
+  return response.data;
+};

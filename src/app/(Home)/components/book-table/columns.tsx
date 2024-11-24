@@ -21,18 +21,6 @@ export const getBookColumns = (setModalState: React.Dispatch<React.SetStateActio
       </Button>
     ),
   },
-  {
-    accessorKey: "author",
-    header: ({ column }) => (
-      <Button
-        variant="ghost"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Author
-        <ArrowUpDown className="ml-2 h-4 w-4" />
-      </Button>
-    ),
-  },
 
   columnHelper.display({
     id: "actions",
