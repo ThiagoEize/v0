@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  next-app:
+    build:
+      context: . # Diretório onde o Dockerfile está localizado
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000" # Mapeia a porta 3000 do container para a porta 3000 do host
+    environment:
+      NODE_ENV: production # Define o ambiente como produção
+    volumes:
+      - ./src:/app # Opcional: Mapeia o diretório local para o container (útil para dev)
+      - /app/node_modules # Evita conflitos de node_modules no host
