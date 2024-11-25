@@ -1,38 +1,62 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
+import { IBook } from '@/lib/types/books';
+import { updateBook } from '@/lib/api/books';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { createBook } from '@/lib/api/books';
 import { useAuthors } from '@/lib/context/authors';
 
-const addBookSchema = z.object({
+const editBookSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   publisher: z.string().min(1, 'Publisher is required'),
   author_id: z.number().min(1, 'Author is required'),
   synopsis: z.string().optional(),
 });
 
-interface CreateBookFormProps {
+interface EditBookFormProps {
+  book: IBook;
   onSuccess: () => void;
 }
 
-export default function AddBookForm({ onSuccess }: CreateBookFormProps) {
-  const { authorsList } = useAuthors();
-
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm<z.infer<typeof addBookSchema>>({
-    resolver: zodResolver(addBookSchema),
+export default function EditBookForm({ book, onSuccess }: EditBookFormProps) {
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<z.infer<typeof editBookSchema>>({
+    resolver: zodResolver(editBookSchema),
+    defaultValues: book,
   });
 
-  const onSubmit = async (data: z.infer<typeof addBookSchema>) => {
+  const { toast } = useToast()
+
+  const { authorsList } = useAuthors();
+
+  const authorId = watch("author_id");
+
+  useEffect(() => {
+    if (book) {
+      setValue('title', book.title || '');
+      setValue('publisher', book.publisher || '');
+      setValue('author_id', book.author_id || 0);
+    }
+  }, [book, setValue]);
+
+  const onSubmit = async (data: z.infer<typeof editBookSchema>) => {
     try {
-      await createBook(data);
+      await updateBook(book.id, data);
+      toast({ title: 'Success', description: 'Book updated successfully.' });
       onSuccess();
     } catch (error) {
-      console.error('Error adding book', error);
+      toast({ title: 'Error', description: 'An error occurred while updating the book.' });
     }
   };
 
@@ -50,7 +74,7 @@ export default function AddBookForm({ onSuccess }: CreateBookFormProps) {
       </div>
       <div>
         <label htmlFor="author_id" className="block text-sm font-medium text-gray-700">Author</label>
-        <Select onValueChange={(value) => setValue('author_id', Number(value))}>
+        <Select value={authorId?.toString() || ''} onValueChange={(value) => setValue('author_id', Number(value))}>
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Select an author" />
           </SelectTrigger>
@@ -69,7 +93,7 @@ export default function AddBookForm({ onSuccess }: CreateBookFormProps) {
         <Input id="synopsis" {...register('synopsis')} />
         {errors.synopsis && <p className="text-red-500">{errors.synopsis.message}</p>}
       </div>
-      <Button type="submit">Add Book</Button>
+      <Button type="submit">Save Changes</Button>
     </form>
   );
 }

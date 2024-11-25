@@ -1,19 +1,16 @@
 'use client';
 
-import { fetchBooks } from '@/lib/api/books';
 import { DataTable } from '@/components/shared/data-table';
-import { usePaginatedQuery } from '@/hooks/usePaginatedQuery';
 import { IBook } from '@/lib/types/books';
-import Spinner from '@/components/ui/spinner';
 import { useEffect, useState } from 'react';
 import { getBookColumns } from './columns';
 import EditBookDialog from './dialogs/edit';
 import CreateBookDialog from './dialogs/add';
-import { Button } from '@/components/ui/button';
 import DetailsBookDialog from './dialogs/show';
 import DeleteBookDialog from './dialogs/delete';
+import { Button } from '@/components/ui/button';
 
-export type ModalType = "delete" | "edit" | "create" | "view"
+export type ModalType = "delete" | "edit" | "create" | "view";
 
 export interface IBookState {
   type: ModalType | null;
@@ -21,18 +18,15 @@ export interface IBookState {
   data?: IBook;
 }
 
-export default function BookTable() {
-  const {
-    data: books,
-    isLoading,
-    refetch,
-  } = usePaginatedQuery<IBook[]>({
-    queryKey: ['books-home'],
-    fetch: () => {
-      return fetchBooks();
-    },
-  });
+interface BookTableProps {
+  books: IBook[];
+  refetchBooks: () => void;
+}
 
+export default function BookTable({
+  books,
+  refetchBooks,
+}: BookTableProps) {
   const [modalState, setModalState] = useState<IBookState>({
     type: null,
     isOpen: false,
@@ -56,26 +50,22 @@ export default function BookTable() {
   return (
     <div>
       <div className="flex justify-end mb-4">
-        <Button onClick={() => handleAddBook()}>Add book</Button>
+        <Button onClick={handleAddBook}>Add book</Button>
       </div>
-      {isLoading ?
-        <Spinner size="large" color="border-blue-500" />
-        :
-        <DataTable columns={columns} data={books || []} />
-      }
+      <DataTable columns={columns} data={books} />
       {modalState.type === "edit" && (
         <EditBookDialog
           isOpen={modalState.isOpen}
           onClose={handleCloseModal}
           book={modalState.data}
-          refetch={refetch}
+          refetch={refetchBooks}
         />
       )}
       {modalState.type === "create" && (
         <CreateBookDialog
           isOpen={modalState.isOpen}
           onClose={handleCloseModal}
-          refetch={refetch}
+          refetch={refetchBooks}
         />
       )}
       {modalState.type === "view" && (
@@ -90,7 +80,7 @@ export default function BookTable() {
           isOpen={modalState.isOpen}
           onClose={handleCloseModal}
           book={modalState.data}
-          refetch={refetch}
+          refetch={refetchBooks}
         />
       )}
     </div>

@@ -4,6 +4,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Button } from '@/components/ui/button';
 import { IBook } from '@/lib/types/books';
 import { deleteBook } from '@/lib/api/books';
+import { useToast } from '@/hooks/use-toast';
 
 interface DeleteBookDialogProps {
   isOpen: boolean;
@@ -13,15 +14,16 @@ interface DeleteBookDialogProps {
 }
 
 export default function DeleteBookDialog({ isOpen, onClose, book, refetch }: DeleteBookDialogProps) {
+  const { toast } = useToast()
   const handleDelete = async () => {
     if (!book?.id) return;
-
     try {
       await deleteBook(book.id);
       refetch();
+      toast({ title: 'Success', description: 'Book deleted successfully.' });
       onClose();
     } catch (error) {
-      console.error('Error deleting book', error);
+      toast({ title: 'Error', description: 'An error occurred while deleting the book.' });
     }
   };
 

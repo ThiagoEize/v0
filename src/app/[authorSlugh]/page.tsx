@@ -5,9 +5,8 @@ import { usePaginatedQuery } from '@/hooks/usePaginatedQuery';
 import { IBook } from '@/lib/types/books';
 import Spinner from '@/components/ui/spinner';
 import BookTable from '@/components/shared/book-table';
-import { AppInfo } from './components/app-info';
 
-export default function Home() {
+export default function AuthorPage() {
 
   const {
     data: books,
@@ -28,7 +27,10 @@ export default function Home() {
 
   return (
     <div>
-      <AppInfo />
+      <BookTable
+        books={books || []}
+        refetchBooks={refetchBooks}
+      />
     </div>
   );
 }
