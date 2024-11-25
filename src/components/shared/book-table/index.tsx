@@ -45,6 +45,7 @@ export default function BookTable({
 
   useEffect(() => {
     console.log('modalState', modalState);
+    //react-hooks/exhaustive-deps
   }, [modalState.type]);
 
   return (
