@@ -1,7 +1,8 @@
 "use client";
 
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { IAuthor } from "../types/authors";
+import { fetchAuthors } from "../api/authors";
 
 type AuthorDataType = IAuthor | null;
 
@@ -18,6 +19,12 @@ export const AuthorContextProvider = ({ children }: { children: React.ReactNode 
   const [author, setAuthor] = useState<AuthorDataType>(null);
   const [authorsList, setAuthorsList] = useState<AuthorDataType[]>([]);
 
+  useEffect(() => {
+    fetchAuthors().then((data) => {
+      setAuthorsList(data);
+    });
+  }, []);
+
   return (
     <AuthorContext.Provider
       value={{
@@ -32,7 +39,7 @@ export const AuthorContextProvider = ({ children }: { children: React.ReactNode 
   );
 };
 
-export const useInfoAddClient = () => {
+export const useAuthors = () => {
   const context = useContext(AuthorContext);
 
   if (!context) {

@@ -10,5 +10,5 @@ services:
     environment:
       NODE_ENV: production # Define o ambiente como produção
     volumes:
-      - ./src:/app # Opcional: Mapeia o diretório local para o container (útil para dev)
-      - /app/node_modules # Evita conflitos de node_modules no host
+      - ./src:/app/src # Map only the source files
+      - /app/node_modules

@@ -3,6 +3,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { IBook } from '@/lib/types/books';
+import DOMPurify from 'dompurify';
 
 interface DetailsBookDialogProps {
   isOpen: boolean;
@@ -11,7 +12,7 @@ interface DetailsBookDialogProps {
 }
 
 export default function DetailsBookDialog({ isOpen, onClose, book }: DetailsBookDialogProps) {
-
+  const sanitizedHTML = DOMPurify.sanitize(book?.synopsis || '');
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -22,7 +23,8 @@ export default function DetailsBookDialog({ isOpen, onClose, book }: DetailsBook
               <DialogTitle>{book.title}</DialogTitle>
               <DialogDescription>
                 <p><strong>Publisher:</strong> {book.publisher}</p>
-                <p><strong>Synopsis:</strong><div dangerouslySetInnerHTML={{ __html: book.synopsis || '' }} /></p>
+                <p><strong>Synopse:</strong></p>
+                <div dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
               </DialogDescription>
             </>
           )}
