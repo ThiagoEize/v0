@@ -11,19 +11,34 @@ export const AppInfo: React.FC = () => {
     router.push('/books');
   };
 
+  const navigateToAuthors = () => {
+    router.push('/authors');
+  };
+
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-      <h1 className="text-4xl font-bold text-gray-800 text-center">
-        Welcome to <span className="text-blue-500">BookFinder</span>
+    <div className="flex flex-col items-center justify-center h-screen bg-gray-50">
+      <h1 className="text-4xl font-extrabold text-gray-900 text-center">
+        Welcome to <span className="text-blue-600">BookFinder</span>
       </h1>
-      <p className="text-lg text-gray-600 text-center max-w-2xl mb-6">
-        Discover your next favorite book with <span className="text-blue-500 font-semibold">BookFinder</span>.
+      <p className="text-lg text-gray-700 text-center max-w-2xl mb-8 mt-4">
+        Discover your next favorite book with <span className="text-blue-600 font-semibold">BookFinder</span>.
         Whether you are searching for the latest bestsellers, timeless classics, or niche genres, we offer an
-        extensive collection to satisfy every reader taste. Start your journey into the world of literature today!
+        extensive collection to satisfy every reader’s taste. Start your journey into the world of literature today!
       </p>
-      <Button onClick={navigateToBooks} className="w-auto px-6">
-        See Our Books
-      </Button>
+      <div className="flex items-center justify-center gap-4">
+        <Button
+          onClick={navigateToBooks}
+          className="px-6 py-3 bg-blue-600 text-white text-lg font-semibold rounded-lg shadow-lg hover:bg-blue-700 transition-all duration-200"
+        >
+          See Our Books
+        </Button>
+        <Button
+          onClick={navigateToAuthors}
+          className="px-6 py-3 bg-gray-200 text-gray-800 text-lg font-semibold rounded-lg shadow-lg hover:bg-gray-300 transition-all duration-200"
+        >
+          See Our Authors
+        </Button>
+      </div>
     </div>
   );
 };

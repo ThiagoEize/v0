@@ -35,7 +35,7 @@ const DropdownItem = React.forwardRef<
     {...props}
     ref={ref}
     className={cn(
-      "flex group py-3 px-4 text-base focus:outline-none cursor-pointer gap-2 hover:bg-surface-01",
+      "flex group py-3 px-4 text-base focus:outline-none cursor-pointer gap-2 hover:bg-surface-01 items-center",
       className
     )}
   >

@@ -5,7 +5,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 // export interface BaseResult<T> {
 //   message: string;
 //   error: string | string[];
-//   Data: T;
+//   data: T;
 //   statusCode: number;
 //   success: boolean;
 //   Pagination: {

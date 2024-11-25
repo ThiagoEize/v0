@@ -11,8 +11,8 @@ export const fetchBooks = async (page = 1, pageSize = 1000): Promise<IBook[]> =>
 };
 
 export const fetchBooksByAuthor = async (authorSlug: string): Promise<IBook[]> => {
-  const response = await Api.get(`${BASE_ROUTE}/author/${authorSlug}`);
-  return response.data;
+  const { data } = await Api.get<IBook[]>(`${BASE_ROUTE}/author/${authorSlug}`);
+  return data;
 };
 
 export const fetchBooksBySubject = async (): Promise<string[]> => {
