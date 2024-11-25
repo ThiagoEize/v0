@@ -25,7 +25,7 @@ export default function AddBookForm({ onSuccess }: CreateBookFormProps) {
 
   const onSubmit = async (data: z.infer<typeof addBookSchema>) => {
     try {
-      await createBook(data);
+      await createBook({ ...data, author_id: 1 });
       toast({ title: 'Success', description: 'Book added successfully.' });
       onSuccess();
     } catch (error) {

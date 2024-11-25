@@ -22,7 +22,7 @@ export default function DetailsBookDialog({ isOpen, onClose, book }: DetailsBook
               <DialogTitle>{book.title}</DialogTitle>
               <DialogDescription>
                 <p><strong>Publisher:</strong> {book.publisher}</p>
-                <p><strong>Synopsis:</strong> {book.synopsis}</p>
+                <p><strong>Synopsis:</strong><div dangerouslySetInnerHTML={{ __html: book.synopsis || '' }} /></p>
               </DialogDescription>
             </>
           )}

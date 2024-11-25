@@ -6,6 +6,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
+import { AuthorContextProvider } from "@/lib/context/authors";
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
@@ -16,7 +17,9 @@ const queryClient = new QueryClient({
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
-      {children}
+      <AuthorContextProvider>
+        {children}
+      </AuthorContextProvider>
     </QueryClientProvider>
   );
 }

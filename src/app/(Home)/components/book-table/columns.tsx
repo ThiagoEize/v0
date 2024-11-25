@@ -21,9 +21,33 @@ export const getBookColumns = (setModalState: React.Dispatch<React.SetStateActio
       </Button>
     ),
   },
-
+  {
+    accessorKey: "publisher",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Publisher
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+  },
+  {
+    accessorKey: "pages",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Pages
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
+  },
   columnHelper.display({
     id: "actions",
+    header: () => "Actions",
     cell: (info) => {
       const rowData = info.row.original;
       return <BookActionsDropdown rowData={rowData} setModalState={setModalState} />;
