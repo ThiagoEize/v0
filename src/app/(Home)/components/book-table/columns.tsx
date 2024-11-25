@@ -70,10 +70,13 @@ export const getBookColumns = (
     },
     columnHelper.display({
       id: "actions",
-      header: () => "Actions",
       cell: (info) => {
         const rowData = info.row.original;
-        return <BookActionsDropdown rowData={rowData} setModalState={setModalState} />;
+        return (
+          <div className="text-right">
+            <BookActionsDropdown rowData={rowData} setModalState={setModalState} />
+          </div>
+        );
       },
     }),
   ];
