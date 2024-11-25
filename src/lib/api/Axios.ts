@@ -1,6 +1,6 @@
 import axios from "axios";
 
-let BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // export interface BaseResult<T> {
 //   message: string;

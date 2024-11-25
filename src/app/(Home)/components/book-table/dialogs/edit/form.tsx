@@ -13,7 +13,6 @@ import { updateBook } from '@/lib/api/books';
 const editBookSchema = z.object({
   title: z.string().min(1, 'Title is required'),
   publisher: z.string().optional(),
-  synopsis: z.string().optional(),
 });
 
 interface EditBookFormProps {
@@ -36,7 +35,6 @@ export default function EditBookForm({ book, onSuccess }: EditBookFormProps) {
     if (book) {
       setValue('title', book.title || '');
       setValue('publisher', book.publisher || '');
-      setValue('synopsis', book.synopsis || '');
     }
   }, [book, setValue]);
 
@@ -46,11 +44,12 @@ export default function EditBookForm({ book, onSuccess }: EditBookFormProps) {
       toast({ title: 'Success', description: 'Book updated successfully.' });
       onSuccess();
     } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to update book.',
-        variant: 'destructive',
-      });
+      // toast({
+      //   title: 'Error',
+      //   description: 'Failed to update book.',
+      //   variant: 'destructive',
+      // });
+      console.error('Error updating book', error);
     }
   };
 
@@ -78,18 +77,6 @@ export default function EditBookForm({ book, onSuccess }: EditBookFormProps) {
         <Input id="publisher" {...register('publisher')} />
         {errors.publisher && (
           <p className="text-red-500">{errors.publisher.message}</p>
-        )}
-      </div>
-      <div>
-        <label
-          htmlFor="synopsis"
-          className="block text-sm font-medium text-gray-700"
-        >
-          Synopsis
-        </label>
-        <Input id="synopsis" {...register('synopsis')} />
-        {errors.synopsis && (
-          <p className="text-red-500">{errors.synopsis.message}</p>
         )}
       </div>
       <Button type="submit">Save Changes</Button>

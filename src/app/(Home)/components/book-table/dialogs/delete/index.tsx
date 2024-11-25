@@ -21,7 +21,7 @@ export default function DeleteBookDialog({ isOpen, onClose, book, refetch }: Del
       refetch();
       onClose();
     } catch (error) {
-
+      console.error('Error deleting book', error);
     }
   };
 

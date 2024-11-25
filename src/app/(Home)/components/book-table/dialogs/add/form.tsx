@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { toast } from '@/hooks/use-toast';
+// import { toast } from '@/hooks/use-toast';
 import { createBook } from '@/lib/api/books';
 
 const addBookSchema = z.object({
@@ -26,10 +26,11 @@ export default function AddBookForm({ onSuccess }: CreateBookFormProps) {
   const onSubmit = async (data: z.infer<typeof addBookSchema>) => {
     try {
       await createBook({ ...data, author_id: 1 });
-      toast({ title: 'Success', description: 'Book added successfully.' });
+      // toast({ title: 'Success', description: 'Book added successfully.' });
       onSuccess();
     } catch (error) {
-      toast({ title: 'Error', description: 'Failed to add book.', variant: 'destructive' });
+      // toast({ title: 'Error', description: 'Failed to add book.', variant: 'destructive' });
+      console.error('Error adding book', error);
     }
   };
 
