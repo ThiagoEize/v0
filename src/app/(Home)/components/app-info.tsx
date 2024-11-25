@@ -18,8 +18,8 @@ export const AppInfo: React.FC = () => {
       </h1>
       <p className="text-lg text-gray-600 text-center max-w-2xl mb-6">
         Discover your next favorite book with <span className="text-blue-500 font-semibold">BookFinder</span>.
-        Whether you're searching for the latest bestsellers, timeless classics, or niche genres, we offer an
-        extensive collection to satisfy every reader's taste. Start your journey into the world of literature today!
+        Whether you are searching for the latest bestsellers, timeless classics, or niche genres, we offer an
+        extensive collection to satisfy every reader taste. Start your journey into the world of literature today!
       </p>
       <Button onClick={navigateToBooks} className="w-auto px-6">
         See Our Books

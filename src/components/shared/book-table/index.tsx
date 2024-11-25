@@ -3,7 +3,7 @@
 import { DataTable } from '@/components/shared/data-table';
 import { IBook } from '@/lib/types/books';
 import { useEffect, useState } from 'react';
-import { getBookColumns } from './columns';
+import { BookColumns } from './columns';
 import EditBookDialog from './dialogs/edit';
 import CreateBookDialog from './dialogs/add';
 import DetailsBookDialog from './dialogs/show';
@@ -33,7 +33,7 @@ export default function BookTable({
     data: undefined,
   });
 
-  const columns = getBookColumns(setModalState);
+  const columns = BookColumns(setModalState);
 
   const handleCloseModal = () => {
     setModalState({ type: null, isOpen: false, data: undefined });

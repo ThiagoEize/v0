@@ -9,7 +9,7 @@ import { useAuthors } from "@/lib/context/authors";
 
 const columnHelper = createColumnHelper<any>();
 
-export const getBookColumns = (
+export const BookColumns = (
   setModalState: React.Dispatch<React.SetStateAction<any>>
 ): ColumnDef<any>[] => {
   const { authorsList } = useAuthors();
