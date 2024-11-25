@@ -2,13 +2,15 @@
 
 import { DataTable } from '@/components/shared/data-table';
 import { IBook } from '@/lib/types/books';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { BookColumns } from './columns';
 import EditBookDialog from './dialogs/edit';
 import CreateBookDialog from './dialogs/add';
 import DetailsBookDialog from './dialogs/show';
 import DeleteBookDialog from './dialogs/delete';
 import { Button } from '@/components/ui/button';
+import { useDebounce } from '@/hooks/useDebounce';
+import { Input } from '@/components/ui/input';
 
 export type ModalType = "delete" | "edit" | "create" | "view";
 
@@ -32,8 +34,17 @@ export default function BookTable({
     isOpen: false,
     data: undefined,
   });
-
   const columns = BookColumns(setModalState);
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const debouncedQuery = useDebounce(searchQuery, 1000);
+
+  const filteredBooks = useMemo(() => {
+    if (!debouncedQuery) return books;
+    return books?.filter((book) =>
+      book?.title?.toLowerCase().includes(debouncedQuery.toLowerCase())
+    );
+  }, [debouncedQuery, books]);
 
   const handleCloseModal = () => {
     setModalState({ type: null, isOpen: false, data: undefined });
@@ -50,10 +61,18 @@ export default function BookTable({
 
   return (
     <div>
-      <div className="flex justify-end mb-4">
-        <Button onClick={handleAddBook}>Add book</Button>
+      <div className="mb-4">
+        <div className="flex mb-4 gap-2">
+          <Input
+            placeholder="Search books by title..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="2-20"
+          />
+          <Button className="bg-green-600" onClick={handleAddBook}>Add book</Button>
+        </div>
       </div>
-      <DataTable columns={columns} data={books} />
+      <DataTable columns={columns} data={filteredBooks} />
       {modalState.type === "edit" && (
         <EditBookDialog
           isOpen={modalState.isOpen}

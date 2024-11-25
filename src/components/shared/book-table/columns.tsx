@@ -28,7 +28,11 @@ export const BookColumns = (
       ),
     },
     {
-      accessorKey: "author_id",
+      accessorFn: (row) => {
+        const author = authorsList?.find((author) => author?.id === row.author_id);
+        return author ? author.title : "Unknown Author";
+      },
+      id: "author_name",
       header: ({ column }) => (
         <Button
           variant="ghost"
@@ -38,11 +42,8 @@ export const BookColumns = (
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       ),
-      cell: (info) => {
-        const authorId = info.getValue();
-        const author = authorsList?.find((author) => author?.id === authorId);
-        return author ? author.title : "Unknown Author";
-      },
+      cell: (info) => info.getValue(),
+      sortingFn: "text",
     },
     {
       accessorKey: "publisher",

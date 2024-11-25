@@ -18,10 +18,10 @@ export const AppInfo: React.FC = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen bg-gray-50">
       <h1 className="text-4xl font-extrabold text-gray-900 text-center">
-        Welcome to <span className="text-blue-600">BookFinder</span>
+        Welcome to <span className="text-blue-600">LookingForBooks</span>
       </h1>
       <p className="text-lg text-gray-700 text-center max-w-2xl mb-8 mt-4">
-        Discover your next favorite book with <span className="text-blue-600 font-semibold">BookFinder</span>.
+        Discover your next favorite book with <span className="text-blue-600 font-semibold">LookingForBooks</span>.
         Whether you are searching for the latest bestsellers, timeless classics, or niche genres, we offer an
         extensive collection to satisfy every reader’s taste. Start your journey into the world of literature today!
       </p>
